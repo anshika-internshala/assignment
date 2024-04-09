@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>crud_operation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="container">
+        <h1>Student Registration System</h1>
+        <div id="mbox">
+
+            <div class="box">
+                <div class="input" autocomplete="off">
+                    <span>Student Name :</span>
+                    <input type="text" id="pid" class="form">
+                    <span>Student Id :</span>
+                    <input type="text" id="pname" class="form">
+                    <span>Class :</span>
+                    <input type="number" id="pqantity" class="form">
+                    <span>Roll No. :</span>
+                    <input type="number" id="pprice" class="form">
+                </div>
+                <div id="btnAdd">
+                    <button id="add">Add</button>
+                </div>
+            </div>
+            <div style=" overflow-x: hidden;" id="box">
+
+                <div style="font-weight: 700;" class="product">
+                    <span class="item">Name </span>
+                    <span class="item"> Id</span>
+                    <span class="item"> Class</span>
+                    <span class="item">Roll NO. </span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script src="logic.js"></script>
+</body>
+
+</html>

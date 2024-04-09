@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Async/Await Example with API</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #9F70FD;
+    }
+    #container {
+        text-align: center;
+    }
+    #myButton {
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    #myButton:hover {
+        background-color: #45a049;
+    }
+    #outputContainer {
+        width: 400px;
+        height: 400px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        display: none;
+        overflow-y: auto;
+        text-align: left;
+        margin: 0 auto;
+        background-color: #fff;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        margin-bottom: 10px;
+    }
+    li:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<div id="container">
+    <button id="myButton">Click me!</button>
+    <div id="outputContainer"></div>
+</div>
+
+<script>
+async function fetchPosts() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    if (!response.ok) {
+        throw new Error('Failed to fetch posts');
+    }
+    return await response.json();
+}
+
+document.getElementById('myButton').addEventListener('click', async function() {
+    const outputContainer = document.getElementById('outputContainer');
+    outputContainer.textContent = 'Loading...';
+    outputContainer.style.display = 'block';
+
+    try {
+        const posts = await fetchPosts();
+        outputContainer.innerHTML = '<h3>Posts:</h3>';
+        const ul = document.createElement('ul');
+        posts.forEach(post => {
+            const li = document.createElement('li');
+            li.textContent = post.title;
+            ul.appendChild(li);
+        });
+        outputContainer.appendChild(ul);
+    } catch (error) {
+        outputContainer.textContent = 'Error: ' + error.message;
+        console.error('Error:', error);
+    }
+});
+</script>
+
+</body>
+</html>

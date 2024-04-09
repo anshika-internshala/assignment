@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise Example</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #FFEBB2;
+    }
+    #container {
+        text-align: center;
+    }
+    #myButton {
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    #myButton:hover {
+        background-color: #45a049;
+    }
+    #outputContainer {
+        width: 400px;
+        height: 400px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        display: none;
+        overflow-y: auto;
+        text-align: left;
+        margin: 0 auto;
+        background-color: #fff;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        margin-bottom: 10px;
+    }
+    li:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<div id="container">
+    <button id="myButton">Click me!</button>
+    <div id="outputContainer"></div>
+</div>
+
+<script>
+function fetchData() {
+    return new Promise((resolve, reject) => {
+        fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(response => response.json())
+        .then(data => {
+            resolve(data);
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
+function performAsyncOperation() {
+    return new Promise((resolve, reject) => {
+        const outputContainer = document.getElementById('outputContainer');
+        outputContainer.textContent = 'Promise resolve after 5 sec...';
+        outputContainer.style.display = 'block';
+        
+        // Simulate a 5-second delay
+        setTimeout(() => {
+            // Once the delay is over, fetch data from the API
+            fetchData()
+            .then(data => {
+                // Once data is fetched, update the output container's text content
+                outputContainer.innerHTML = '<h3>Posts:</h3>';
+                data.forEach(post => {
+                    const p = document.createElement('p');
+                    p.textContent = post.title;
+                    outputContainer.appendChild(p);
+                });
+                resolve();
+            })
+            .catch(error => {
+                outputContainer.textContent = 'Error fetching data.';
+                reject(error);
+            });
+        }, 5000);
+    });
+}
+
+document.getElementById('myButton').addEventListener('click', function() {
+    performAsyncOperation();
+});
+</script>
+
+</body>
+</html>
